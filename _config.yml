@@ -1,0 +1,15 @@
+
+baseurl: ""
+url: ""
+source: app/src
+destination: _site
+layouts_dir: _layouts
+includes_dir: _includes
+defaults:
+  -
+    scope:
+      path: ""
+      type: "pages"
+    values:
+      layout: "default"
+      permalink: /:path/:basename:output_ext

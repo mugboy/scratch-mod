@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oligarchy Quiz</title>
+
+    <!-- Default theme link, it will be replaced by JavaScript -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
+    <style>
+        #menu {
+            padding-top: 200px;
+        }
+
+        .feedback {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .correct {
+            color: green;
+        }
+
+        .incorrect {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div align="center" id="menu">
+        <h1>Oligarchy Quiz</h1>
+        <button class="center" onclick="play()">Play now</button>
+    </div>
+
+    <form align="center" id="game">
+        <!-- Question 1 -->
+        <fieldset class="question" id="q1">
+            <legend>1. What is an oligarchy?</legend>
+            <label>
+                <input type="radio" name="q1" value="a"> A type of government that is a small group of people ruling
+                over a society
+            </label><br>
+            <label>
+                <input type="radio" name="q1" value="b"> A form of government where all citizens have equal power
+            </label><br>
+            <label>
+                <input type="radio" name="q1" value="c"> A system of government in which a monarch rules alone
+            </label><br>
+            <label>
+                <input type="radio" name="q1" value="d"> A government based on religious law
+            </label><br>
+            <button type="button" onclick="nextQuestion(1)">Next</button>
+            <div id="feedback1" class="feedback"></div>
+        </fieldset>
+
+        <!-- Question 2 -->
+        <fieldset class="question" id="q2" style="display:none;">
+            <legend>2. Who typically holds power in an oligarchy?</legend>
+            <label>
+                <input type="radio" name="q2" value="a"> A large group of elected officials
+            </label><br>
+            <label>
+                <input type="radio" name="q2" value="b"> A single ruler
+            </label><br>
+            <label>
+                <input type="radio" name="q2" value="c"> A few wealthy or powerful individuals
+            </label><br>
+            <label>
+                <input type="radio" name="q2" value="d"> All citizens equally
+            </label><br>
+            <button type="button" onclick="nextQuestion(2)">Next</button>
+            <div id="feedback2" class="feedback"></div>
+        </fieldset>
+
+        <!-- Question 3 -->
+        <fieldset class="question" id="q3" style="display:none;">
+            <legend>3. Which of the following is an example of an oligarchic system?</legend>
+            <label>
+                <input type="radio" name="q3" value="a"> Ancient Athens
+            </label><br>
+            <label>
+                <input type="radio" name="q3" value="b"> The Soviet Union under Stalin
+            </label><br>
+            <label>
+                <input type="radio" name="q3" value="c"> Nazi Germany under Hitler
+            </label><br>
+            <label>
+                <input type="radio" name="q3" value="d"> A small group of wealthy families controlling a country
+            </label><br>
+            <button type="button" onclick="submitQuiz()">Submit</button>
+            <div id="feedback3" class="feedback"></div>
+        </fieldset>
+    </form>
+
+    
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script>
+        let score;
+        const game = $("#game");
+        game.hide();
+        function play() {
+            $("#menu").hide();
+            game.show(1);
+        }
+
+        // Define correct answers
+        const answers = {
+            q1: "a",
+            q2: "c",
+            q3: "d"
+        };
+
+        function nextQuestion(questionNum) {
+            let selectedAnswer = $(`input[name="q${questionNum}"]:checked`).val();
+            let feedback = document.getElementById(`feedback${questionNum}`);
+
+            if (!selectedAnswer) {
+                feedback.textContent = "Please select an answer.";
+                feedback.className = "feedback incorrect";
+                return;
+            }
+
+            // Check answer
+            if (selectedAnswer === answers[`q${questionNum}`]) {
+                feedback.textContent = "Correct!";
+                feedback.className = "feedback correct";
+                score++;
+            } else {
+                feedback.textContent = `Incorrect. The correct answer is: ${answers[`q${questionNum}`]}`;
+                feedback.className = "feedback incorrect";
+            }
+
+            // Wait a moment to show feedback before moving to next question
+            setTimeout(() => {
+                $(`#q${questionNum}`).hide();
+                if (questionNum < 3) {
+                    $(`#q${questionNum + 1}`).show();
+                }
+            }, 1500);
+        }
+
+        function submitQuiz() {
+            let selectedAnswer = $(`input[name="q3"]:checked`).val();
+            let feedback = document.getElementById(`feedback3`);
+
+            if (!selectedAnswer) {
+                feedback.textContent = "Please select an answer.";
+                feedback.className = "feedback incorrect";
+                return;
+            }
+
+            if (selectedAnswer === answers.q3) {
+                feedback.textContent = "Correct!";
+                score++;
+                feedback.className = "feedback correct";
+            } else {
+                feedback.textContent = `Incorrect. The correct answer is: ${answers.q3}`;
+                feedback.className = "feedback incorrect";
+            }
+        }
+
+    </script>
+</body>
+
+</html>
